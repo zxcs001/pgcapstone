@@ -1,0 +1,93 @@
+<!-- Home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Pawsh – Our Story</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+        <a href="/"><div class="logo">PAWSH</div></a>
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="#">Our Story</a>
+            <a href="#">Shop</a>
+            <a href="/contact">Contact Us</a>
+        </nav>
+        <div class="profile-icon">
+            <a href="/login"><img src="img/user.png" alt="Profile"></a>
+        </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Checkout</h1>
+        <div style="display:flex; gap:40px; flex-wrap:wrap;">
+          <!-- SHIPPING ADDRESS -->
+          <div style="flex:1; min-width:280px;">
+            <h2>Shipping Address</h2>
+            <div class="form-group">
+              <input type="text" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="Street Address">
+            </div>
+            <div class="form-group">
+              <input type="text" placeholder="City, State, ZIP">
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+              <input type="tel" placeholder="Phone">
+            </div>
+    
+            <h2>Payment Information</h2>
+            <div class="form-group">
+              <input type="text" placeholder="Credit Card Number">
+            </div>
+            <div style="display:flex; gap:10px;">
+              <div class="form-group" style="flex:2;">
+                <input type="text" placeholder="Exp. MM/YY">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <input type="text" placeholder="CVC">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox"> Billing address same as shipping
+              </label>
+            </div>
+          </div>
+    
+          <!-- ORDER REVIEW -->
+          <div style="flex:1; min-width:280px;">
+            <h2>Order Review</h2>
+            <div class="card">
+              <img src="#" alt="Product Name" style="width:100%; border-radius:4px;">
+              <h3>Product Name</h3>
+              <p>Color / Description</p>
+              <p><strong>Total: $35.00</strong></p>
+            </div>
+            <a class="button" href="#">Place Order</a>
+          </div>
+        </div>
+      </main>
+    <!-- Subscribe / Footer -->
+    <section class="subscribe">
+        <p>Join the pack for Pawsh Perks</p>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
+        </div>
+      </section>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!-- Home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Pawsh – Our Story</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+        <a href="/"></a><div class="logo">PAWSH</div>
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="#">Our Story</a>
+            <a href="#">Shop</a>
+            <a href="/contact">Contact Us</a>
+        </nav>
+        <div class="profile-icon">
+            <a href="/login"><img src="img/user.png" alt="Profile"></a>
+        </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Contact Us</h1>
+
+        <div style="display:flex; gap:40px; flex-wrap:wrap;">
+        <!-- Contact Info -->
+        <div style="flex:1; min-width:280px;">
+            <ul style="list-style:none; padding:0; line-height:2;">
+            <li>📧 <a href="mailto:info@pawsh.com">info@pawsh.com</a></li>
+            <li>👍 <a href="#">Pawsh on Facebook</a></li>
+            <li>🐦 <a href="#">@Pawsh on Instagram</a></li>
+            <li>📞 (800) 12-Pawsh</li>
+            <li>🏠 123 Main St. Doggietown, OH 45078</li>
+            </ul>
+        </div>
+
+        <!-- Chat Widget Placeholder -->
+        <div style="flex:1; min-width:280px;">
+            <div style="border:1px solid #ccc; border-radius:4px; padding:10px;">
+            <h3>Chat with us</h3>
+            <div style="border:1px solid #ddd; height:200px; border-radius:4px; padding:10px; overflow:auto;">
+                <p><em>Hi there! How can I help you today?</em></p>
+            </div>
+            <input
+                type="text"
+                placeholder="Type your message..."
+                style="width:100%; padding:8px; margin-top:10px; border:1px solid #ccc; border-radius:4px;"
+            >
+            </div>
+        </div>
+        </div>
+
+        <!-- Contact Form -->
+        <h2>Send Us a Message</h2>
+        <form style="max-width:600px; margin:auto;">
+        <div class="form-group">
+            <input type="text" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+            <textarea rows="5" placeholder="Message" required></textarea>
+        </div>
+        <button type="submit" class="button" style="width:100%;">Send</button>
+        </form>
+    </main>
+    <!-- Subscribe / Footer -->
+    <section class="subscribe">
+        <p>Join the pack for Pawsh Perks</p>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
+        </div>
+      </section>
+</body>
+</html>

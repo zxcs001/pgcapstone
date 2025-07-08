@@ -16,6 +16,8 @@ body {
   margin: 0 auto;
 }
 
+a {text-decoration: none; }
+
 /* HEADER */
 header {
   background-color: #f9f9f9;
@@ -143,6 +145,63 @@ header {
   width: 60px;
   height: 60px;
 }
+
+
+/* Checkout Page */
+main {
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #333;
+  background: #fff;
+  color: #333;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+/* End Checkout Page */
+
+/* Contact Page */
+
+
+/* End Contact Page */
+
+/* history Page */
+.card.history{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 50px;
+  margin-bottom: 20px;
+}
+
+.button.history{
+  margin-top: 20px;
+}
+/* end history Page */
 
 /* RESPONSIVE */
 @media (max-width: 768px) {

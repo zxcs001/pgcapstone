@@ -4,8 +4,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
+var checkout = require('./routes/checkout');
 var app = express();
 
 // view engine setup
@@ -20,7 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static('public'));
 
 
-app.use('/', routes);
+app.use('/', index);
+app.use('/checkout', checkout);
 app.use('/users', users);
 
 // 404 code

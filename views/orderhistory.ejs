@@ -1,0 +1,81 @@
+<!-- Home.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Pawsh – Our Story</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+        <a href="/"><div class="logo">PAWSH</div></a>
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="#">Our Story</a>
+            <a href="#">Shop</a>
+            <a href="/contact">Contact Us</a>
+        </nav>
+        <div class="profile-icon">
+            <a href="/login"><img src="img/user.png" alt="Profile"></a>
+        </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Order History</h1>
+
+        <div class="cards" style="flex-direction: column; gap: 20px; max-width: 600px; margin: auto;">
+          <!-- Order 1 -->
+          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p><strong>Order #:</strong> 15504</p>
+              <p>Placed: June 4, 2025</p>
+              <p>Status: Shipped</p>
+            </div>
+            <div>
+              <p><strong>Total:</strong> $105.00</p>
+              <a class="button history" href="#">Track Order</a>
+            </div>
+          </div>
+          <!-- Order 2 -->
+          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p><strong>Order #:</strong> 13457</p>
+              <p>Placed: December 22, 2024</p>
+              <p>Status: Delivered</p>
+            </div>
+            <div>
+              <p><strong>Total:</strong> $30.00</p>
+              <a class="button history" href="#">View Order</a>
+            </div>
+          </div>
+          <!-- Order 3 -->
+          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <p><strong>Order #:</strong> 12357</p>
+              <p>Placed: July 15, 2023</p>
+              <p>Status: Delivered</p>
+            </div>
+            <div>
+              <p><strong>Total:</strong> $45.00</p>
+              <a class="button history" href="#">View Order</a>
+            </div>
+          </div>
+        </div>
+    </main>
+    <!-- Subscribe / Footer -->
+    <section class="subscribe">
+        <p>Join the pack for Pawsh Perks</p>
+        <form class="subscribe-form">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
+          <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
+        </div>
+      </section>
+</body>
+</html>

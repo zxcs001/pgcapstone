@@ -25,17 +25,17 @@
 
     <main class="container">
         <h1>Welcome Back</h1>
-        <form style="max-width:400px; margin:20px auto;">
+        <form style="max-width:400px; margin:20px auto;" method="post" >
           <div class="form-group">
-            <input type="email" placeholder="Email" required>
+            <input id="email" name="email" type="email" placeholder="Email" required>
           </div>
           <div class="form-group">
-            <input type="password" placeholder="Password" required>
+            <input id="password" name="password" type="password" placeholder="Password" required>
           </div>
           <p style="text-align:right; margin-top:-10px; margin-bottom:15px;">
             <a href="#">Forgot Password?</a>
           </p>
-          <a href="/login-api"><button type="submit" class="button" style="width:100%;">Log In</button></a>
+          <button type="submit" class="button" style="width:100%;">Log In</button>
         </form>
         <p style="text-align:center; margin-top:10px;">
           New Customer? <a href="/users">Create Account</a>

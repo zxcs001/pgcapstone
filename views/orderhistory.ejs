@@ -6,6 +6,34 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Pawsh – Our Story</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <style>
+    main {
+      width: 90%;
+      margin: 20px auto;
+    }
+    .order {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .order-info {
+      flex: 1;
+    }
+    .order-actions {
+      text-align: right;
+    }
+    .order-actions button {
+      padding: 8px 12px;
+      border: none;
+      background: #27ae60;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
     <header>
@@ -23,47 +51,31 @@
         </div>
     </header>
 
-    <main class="container">
-        <h1>Order History</h1>
-
-        <div class="cards" style="flex-direction: column; gap: 20px; max-width: 600px; margin: auto;">
-          <!-- Order 1 -->
-          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p><strong>Order #:</strong> 15504</p>
-              <p>Placed: June 4, 2025</p>
-              <p>Status: Shipped</p>
+    <main>
+      <h2>Order History</h2>
+      <% if (data.length === 0) { %>
+        <p>You have no orders yet.</p>
+      <% } else { %>
+        <% data.forEach(function(order) { %>
+          <div class="order">
+            <div class="order-info">
+              <p><strong>Order #: <%= order.id %></strong></p>
+              <p>Placed: 
+                <% if (order.user.created_at) { %>
+                  <%= new Date(order.user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+                <% } else { %>
+                  Unknown Date
+                <% } %>
+              </p>
+              <p>Status: <%= order.status || 'Pending' %></p>
             </div>
-            <div>
-              <p><strong>Total:</strong> $105.00</p>
-              <a class="button history" href="#">Track Order</a>
-            </div>
-          </div>
-          <!-- Order 2 -->
-          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p><strong>Order #:</strong> 13457</p>
-              <p>Placed: December 22, 2024</p>
-              <p>Status: Delivered</p>
-            </div>
-            <div>
-              <p><strong>Total:</strong> $30.00</p>
-              <a class="button history" href="#">View Order</a>
+            <div class="order-actions">
+              <p><strong>Total: $<%= parseFloat(order.total).toFixed(2) %></strong></p>
+              <a href="/history/<%= order.id %>"><button>View Order</button></a>
             </div>
           </div>
-          <!-- Order 3 -->
-          <div class="card history" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <p><strong>Order #:</strong> 12357</p>
-              <p>Placed: July 15, 2023</p>
-              <p>Status: Delivered</p>
-            </div>
-            <div>
-              <p><strong>Total:</strong> $45.00</p>
-              <a class="button history" href="#">View Order</a>
-            </div>
-          </div>
-        </div>
+        <% }); %>
+      <% } %>
     </main>
     <!-- Subscribe / Footer -->
     <section class="subscribe">

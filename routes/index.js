@@ -52,11 +52,15 @@ router.get('/checkout', function(req, res, next) {
   res.render('checkout', { title: 'This is example form Yuchen' });
 });
 
-router.get('/cart', function(req, res, next) {
-  // business logic here
-  // for example fetch data from our backend
-  // prepare data for our html website
-  res.render('cart', { title: 'This is example form Yuchen' });
+router.get('/cart', auth, function(req, res, next) {
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  axios.get(globalConstant.backendApi+'/cart', config)
+  .then(function (response) {
+    console.log(response.data.data.cartitems);
+    res.render('cart', {data: response.data.data.cartitems});
+  });
 });
 
 router.get('/contact', function(req, res, next) {
@@ -97,9 +101,30 @@ router.get('/login', function(req, res, next) {
   res.render('login', { title: '' });
 });
 
-router.get('/history', function(req, res, next) {
-  // history
-  res.render('orderhistory', { title: 'This is example form Yuchen' });
+router.get('/history', auth,  function(req, res, next) {
+  // orders history
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  axios.get(globalConstant.backendApi+'/orders/', config)
+  .then(function (response) {
+    //console.log(req.cookies['session_token'])
+    res.render('orderhistory', { data: response.data.data.orders  });
+  });
+});
+
+router.get('/history/:id', auth,  function(req, res, next) {
+  // specific order
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  const id = req.params.id;
+  axios.get(globalConstant.backendApi+'/orders/'+id, config)
+  .then(function (response) {
+    console.log(response.data.data )
+    console.log(response.data.data.order.items)
+    res.render('singleorder', { data: response.data.data });
+  });
 });
 
 router.post('/login', async function(req, res, next) {
@@ -121,11 +146,12 @@ router.post('/login', async function(req, res, next) {
         //console.log(response.data)
         signinHandler(res,  user, token)
         res.render('/', { title: '' });
+      } else{
+        res.render('/', { title: 'wrong input' });
       }
-      res.render('/login', { title: 'wrong input' });
     } catch (error) {
       console.log(error);
-      res.render('login', { title: 'error' });
+      res.render('/', { title: 'error' });
   }
 
 });

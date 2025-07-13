@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Pawsh – Our Story</title>
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
     <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,7 +59,6 @@
             <thead>
             <tr>
                 <th>Item</th>
-                <th>Description</th>
                 <th>Price</th>
                 <th>Qty</th>
                 <th>Total</th>
@@ -67,16 +66,15 @@
             </thead>
             <tbody>
             <% let grandTotal = 0; %>
-            <% data.forEach(function(item) { %>
+            <% data.order.items.forEach(function(item) { %>
                 <% 
                 const quantity = item.quantity || 1;
-                const price = parseFloat(item.product.price);
+                const price = parseFloat(item.unitprice);
                 const total = price * quantity;
                 grandTotal += total;
                 %>
                 <tr>
                 <td><%= item.title || 'Untitled Product' %></td>
-                <td><%= item.product.description || '' %></td>
                 <td>$<%= price.toFixed(2) %></td>
                 <td><%= item.quantity %></td>
                 <td>$<%= total.toFixed(2) %></td>
@@ -89,8 +87,13 @@
         </div>
         <div class="cart-actions">
         <a href="/shop"><button>Continue Shopping</button></a>
-        <button>Order History</button>
-        <button class="checkout">Checkout</button>
+        <a href="/history"><button>Order History</button></a>
+         <% if(data.order.payment?.length > 0){ %>
+            <a href="/shop"><button class="checkout">Go back</button></a>
+        <% } else{ %>
+            <button class="checkout">Checkout</button>
+        <% } %>
+        
         </div>
     </main>
 

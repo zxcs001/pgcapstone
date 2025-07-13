@@ -106,8 +106,7 @@ header {
   text-align: center;
   padding: 40px 0;
   background-color: #f9f9f9;
-  position: absolute;
-  bottom: -300px;
+  position: relative;
   width: 100%;
 }
 .subscribe p {

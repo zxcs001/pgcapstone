@@ -21,7 +21,6 @@ const auth = (req, res, next) => {
     // We then get the session of the user from our session map
     // that we set in the signinHandler
     userSession = sessions[sessionToken]
-    console.log('here is cookies ', userSession);
     if (!userSession) {
         // If the session token is not present in session map, return an unauthorized error
         res.redirect(307, "/login");
@@ -72,9 +71,24 @@ router.get('/users', function(req, res, next) {
   res.render('signup', { title: 'This is example form Yuchen' });
 });
 
-router.get('/shop', function(req, res, next) {
+router.get('/shop', async function(req, res, next) {
   // user profile
-  res.render('shop', { title: 'This is example form Yuchen' });
+  axios.get(globalConstant.backendApi+'/products')
+  .then(function (response) {
+    console.log(response.data);
+    res.render('shop', {data: response.data.data});
+  });
+});
+
+
+router.get('/shop/:id', auth, async function(req, res, next) {
+  // user profile
+  const id = req.params.id;
+  axios.get(globalConstant.backendApi+'/products/'+id)
+  .then(function (response) {
+    //console.log(req.cookies['session_token'])
+    cart[req.cookies['session_token']]+=response.data.data;
+  });
 });
 
 router.get('/login', function(req, res, next) {
@@ -116,6 +130,33 @@ router.post('/login', async function(req, res, next) {
 
 });
 
+router.post('/users', async function(req, res, next) { 
+  var email = req.body.email;
+  var password = req.body.password;
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  //console.log('req body',req.body)
+  //test data
+  const data = {
+    "email": email,
+    "password": password,
+    "firstname": firstname,
+    "lastname": lastname
+  }
+
+  try {
+      response = await axios.post(globalConstant.backendApi+'/register', data)
+      console.log('registering' ,response.data.data)
+      if (response.data.data.success){
+        res.render('/login', { title: '' });
+      }
+      res.render('/users', { title: 'wrong input' });
+    } catch (error) {
+      console.log(error);
+      res.render('login', { title: 'error' });
+  }
+});
+
 class Session {
     constructor(username, expiresAt, hashedToken) {
         this.username = username
@@ -131,14 +172,14 @@ class Session {
 
 // this object stores the users sessions. For larger scale applications, you can use a database or cache for this purpose
 const sessions = {}
+const cart = {}
 
 const signinHandler = (res,username,token) => {
 
     const sessionToken = token
 
-    // set the expiry time as 120s after the current time
     const now = new Date()
-    const expiresAt = new Date(+now + 220 * 1000)
+    const expiresAt = new Date(+now + 520 * 1000)
 
     // create a session containing information about the user and expiry time
     const session = new Session(username,token,expiresAt)

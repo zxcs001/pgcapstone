@@ -14,7 +14,7 @@
         <nav class="main-nav">
             <a href="/">Home</a>
             <a href="#">Our Story</a>
-            <a href="#">Shop</a>
+            <a href="/shop">Shop</a>
             <a href="/contact">Contact Us</a>
         </nav>
         <div class="profile-icon">
@@ -50,30 +50,15 @@
         <section class="best-sellers">
         <h2>Best Sellers</h2>
         <div class="products">
+        <% for (let i = 0; i < data.products.length; i++) { %>
             <div class="product">
-            <div class="image-placeholder"></div>
-            <h4>Product Name</h4>
-            <p>$00.00</p>
-            <button>Add to Wag Bag</button>
+                <div class="image-placeholder"></div>
+                <h4><%= data.products[i].title %></h4>
+                <h6><%= data.products[i].description %></h6>
+                <p>$<%= data.products[i].price %></p>
+                <button>Add to Wag Bag</button>
             </div>
-            <div class="product">
-            <div class="image-placeholder"></div>
-            <h4>Product Name</h4>
-            <p>$00.00</p>
-            <button>Add to Wag Bag</button>
-            </div>
-            <div class="product">
-            <div class="image-placeholder"></div>
-            <h4>Product Name</h4>
-            <p>$00.00</p>
-            <button>Add to Wag Bag</button>
-            </div>
-            <div class="product">
-            <div class="image-placeholder"></div>
-            <h4>Product Name</h4>
-            <p>$00.00</p>
-            <button>Add to Wag Bag</button>
-            </div>
+        <% } %>
         </div>
         </section>
     </main>

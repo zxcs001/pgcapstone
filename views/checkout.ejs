@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="container header-container">
-        <a href="/"><div class="logo">pawsh</div></a>
+        <a href="/"><div class="logo">PAWSH</div></a>
         <nav class="main-nav">
             <a href="/">Home</a>
             <a href="#">Our Story</a>
@@ -27,53 +27,69 @@
         <h1>Checkout</h1>
         <div style="display:flex; gap:40px; flex-wrap:wrap;">
           <!-- SHIPPING ADDRESS -->
-          <div style="flex:1; min-width:280px;">
-            <h2>Shipping Address</h2>
-            <div class="form-group">
-              <input type="text" placeholder="Full Name">
-            </div>
-            <div class="form-group">
-              <input type="text" placeholder="Street Address">
-            </div>
-            <div class="form-group">
-              <input type="text" placeholder="City, State, ZIP">
-            </div>
-            <div class="form-group">
-              <input type="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <input type="tel" placeholder="Phone">
-            </div>
-    
-            <h2>Payment Information</h2>
-            <div class="form-group">
-              <input type="text" placeholder="Credit Card Number">
-            </div>
-            <div style="display:flex; gap:10px;">
-              <div class="form-group" style="flex:2;">
-                <input type="text" placeholder="Exp. MM/YY">
+          <form style="max-width:400px; margin:20px auto;" method="post" >
+            <div style="flex:1; min-width:280px;">
+              <h2>Shipping Address</h2>
+              <div class="form-group">
+                <input id="name" name="name" type="text" placeholder="Full Name" required>
               </div>
-              <div class="form-group" style="flex:1;">
-                <input type="text" placeholder="CVC">
+              <div class="form-group">
+                <input id="street" name="street" type="text" placeholder="Street Address" required>
               </div>
+              <div class="form-group">
+                <input id="city" name="city" type="text" placeholder="City" required>
+              </div>
+              <div class="form-group">
+                <input id="state" name="state" type="text" placeholder="State" required>
+              </div>
+              <div class="form-group">
+                <input id="country" name="country" type="text" placeholder="Country" required>
+              </div>
+              <div class="form-group">
+                <input id="postalcode" name="postalcode" type="text" placeholder="Postal Code" required>
+              </div>
+      
+              <h2>Payment Information</h2>
+              <div class="form-group">
+                <input type="text" placeholder="Credit Card Number">
+              </div>
+              <div style="display:flex; gap:10px;">
+                <div class="form-group" style="flex:2;">
+                  <input type="text" placeholder="Exp. MM/YY">
+                </div>
+                <div class="form-group" style="flex:1;">
+                  <input type="text" placeholder="CVC">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="checkbox"> Billing address same as shipping
+                </label>
+              </div>
+              <button class="button" href="#">Place Order</button>
             </div>
-            <div class="form-group">
-              <label>
-                <input type="checkbox"> Billing address same as shipping
-              </label>
-            </div>
-          </div>
-    
+          </form>
+          
           <!-- ORDER REVIEW -->
           <div style="flex:1; min-width:280px;">
             <h2>Order Review</h2>
             <div class="card">
-              <img src="#" alt="Product Name" style="width:100%; border-radius:4px;">
-              <h3>Product Name</h3>
-              <p>Color / Description</p>
-              <p><strong>Total: $35.00</strong></p>
+            <% let grandTotal = 0; %>
+              <% data.forEach(function(item) { %>
+                <% 
+                const quantity = item.quantity || 1;
+                const price = parseFloat(item.product.price);
+                const total = price * quantity;
+                grandTotal += total;
+                %>
+                <img class="checkout-img" src="img/OIP.webp" alt="Product Image" style="border-radius:4px;">
+                <h3><%= item.title || 'Untitled Product' %></h3>
+                <p>Description: <%= item.product.description || '' %></p>
+                <p>Price: $<%= item.product.price || '' %></p>
+                <p>Quantity: <%= item.quantity %></p>
+              <% }); %>
+                <p><strong>Total: <%= grandTotal.toFixed(2) %></strong></p>
             </div>
-            <a class="button" href="#">Place Order</a>
           </div>
         </div>
       </main>

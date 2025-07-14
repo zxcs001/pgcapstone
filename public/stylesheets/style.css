@@ -32,6 +32,7 @@ header {
 .logo {
   font-size: 32px;
   font-weight: bold;
+  text-decoration: none;
 }
 .main-nav a {
   margin: 0 15px;
@@ -182,6 +183,10 @@ h1 {
   border-radius: 4px;
   text-decoration: none;
   cursor: pointer;
+}
+
+.checkout-img {
+  width: 200px;
 }
 
 .card {

@@ -3,6 +3,8 @@ var express = require('express');
 const axios = require('axios').default;
 var router = express.Router();
 
+
+
 const auth = (req, res, next) => {
    
     if (!req.cookies) {
@@ -43,11 +45,52 @@ router.get('/', auth, function(req, res, next) {
   res.render('index', { title: '' });
 });
 
-router.get('/checkout', function(req, res, next) {
-  // business logic here
-  // for example fetch data from our backend
-  // prepare data for our html website
-  res.render('checkout', { title: 'This is example form Yuchen' });
+router.get('/checkout', auth, function(req, res, next) {
+  
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  axios.get(globalConstant.backendApi+'/cart', config)
+  .then(function (response) {
+    //console.log(response.data.data.cartitems);
+    //res.render('cart', {data: response.data.data.cartitems});
+    res.render('checkout', { data: response.data.data.cartitems });
+  });
+
+});
+
+router.post('/checkout', auth, function(req, res, next) {
+  
+  var street = req.body.street;
+  var city = req.body.city;
+  var state = req.body.state;
+  var country = req.body.country;
+  var postalcode = req.body.postalcode;
+  var name = req.body.name;
+  //test data: secure123
+  const address = {
+    "street_one": street,
+    "city": city,
+    "state": state,
+    "country": country,
+    "postalcode": postalcode,
+    "name": name
+  }
+  console.log(address);
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  }
+  axios.post(globalConstant.backendApi+'/addresses', address, config)
+  .then(function (response) {
+    let shippingAddressId = {
+      "shipping_addressid": response.data.data.address.id
+    }
+    axios.post(globalConstant.backendApi+'/orders', shippingAddressId, config)
+      .then(function (response) {
+        res.render('notification', { data: null });
+      });
+  });
+
 });
 
 router.get('/cart', auth, function(req, res, next) {

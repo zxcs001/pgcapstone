@@ -32,7 +32,11 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
+// Error hanlding route
+app.use((err, req, res, next) => { 
+  console.error(err); 
+  res.render('error', { error: err });; 
+});
 
 
 module.exports = app;

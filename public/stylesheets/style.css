@@ -109,6 +109,15 @@ header {
   position: relative;
   width: 100%;
 }
+
+.subscribe-blankpage {
+  text-align: center;
+  padding: 40px 0;
+  background-color: #f9f9f9;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 .subscribe p {
   font-size: 18px;
   margin-bottom: 20px;
@@ -267,6 +276,17 @@ main.cart h2 {
 .cart-actions .checkout {
   background: #27ae60;
   color: #fff;
+}
+
+.toast.fade.show {
+  position: absolute;
+  top: 90px;
+  right: 0px;
+  width: 250px;
+}
+
+.close {
+  margin-left: 20px;
 }
 
 /* shop page */

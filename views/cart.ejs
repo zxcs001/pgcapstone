@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Pawsh – Our Story</title>
+  <title>pawsh – Our Story</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-    <style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -40,7 +41,7 @@
 <body>
     <header>
         <div class="container header-container">
-        <a href="/"><div class="logo">PAWSH</div></a>
+        <a href="/"><div class="logo">pawsh</div></a>
         <nav class="main-nav">
             <a href="/">Home</a>
             <a href="#">Our Story</a>
@@ -79,24 +80,34 @@
                 <td><%= item.product.description || '' %></td>
                 <td>$<%= price.toFixed(2) %></td>
                 <td><%= item.quantity %></td>
-                <td>$<%= total.toFixed(2) %></td>
+                <td>$<%= total.toFixed(2) %><button onclick="deleteCartItem('<%= item.id %>')" type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                </td>
                 </tr>
             <% }); %>
             </tbody>
         </table>
         <div class="subtotal">
-        Subtotal: $32.00
+        Subtotal: $<%= grandTotal.toFixed(2) %>
         </div>
         <div class="cart-actions">
         <a href="/shop"><button>Continue Shopping</button></a>
-        <button>Order History</button>
+        <a href="/history"><button>Order History</button></a>
         <button class="checkout">Checkout</button>
         </div>
     </main>
 
+    <div class="toast">
+        <div class="toast-body">
+            <p>Successfully added to cart</p>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+
     <!-- Subscribe / Footer -->
     <section class="subscribe">
-        <p>Join the pack for Pawsh Perks</p>
+        <p>Join the pack for pawsh Perks</p>
         <form class="subscribe-form">
           <input type="email" placeholder="Email Address">
           <button type="submit">Subscribe</button>
@@ -105,6 +116,39 @@
           <a href="#"><img src="img/facebook.png" alt="Facebook"></a>
           <a href="#"><img src="img/instagram.png" alt="Instagram"></a>
         </div>
-      </section>
+    </section>
+
+    <script>
+        function toast() {
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl)
+            })
+            toastList.forEach(toast => toast.show()) 
+        }
+
+        function updateCartItem(id, quantity) {
+            console.log(id)
+            axios.put("/cart/"+id, {
+                quantity: quantity
+            })
+            .then((response) => {
+                window.location.reload(true);})
+            .then((error) => console.log(error));
+        }
+
+        function deleteCartItem(id) {
+            console.log(id)
+            axios.put("/cart/"+id, {
+                quantity: 0
+            })
+            .then((response) => {
+                window.location.reload(true);})
+            .then((error) => console.log(error));
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>

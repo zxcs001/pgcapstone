@@ -39,10 +39,8 @@ const auth = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', auth, function(req, res, next) {
-  // business logic here
-  // for example fetch data from our backend
-  // prepare data for our html website
-  res.render('index', { title: 'This is example form Yuchen' });
+
+  res.render('index', { title: '' });
 });
 
 router.get('/checkout', function(req, res, next) {
@@ -58,25 +56,60 @@ router.get('/cart', auth, function(req, res, next) {
   };
   axios.get(globalConstant.backendApi+'/cart', config)
   .then(function (response) {
-    console.log(response.data.data.cartitems);
     res.render('cart', {data: response.data.data.cartitems});
   });
 });
 
+router.post('/cart', auth, function(req, res, next) {
+  var body = {
+    quantity : req.body.quantity,
+    productid : req.body.productid
+  }
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  axios.post(globalConstant.backendApi+'/cart', body, config)
+  .then(function (response) {
+    res.json({ data: response.data })
+  });
+});
+
+router.put('/cart/:id', auth, function(req, res, next) {
+  var body = {
+    quantity : req.body.quantity,
+  }
+  const id = req.params.id;
+  const config = {
+    headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
+  };
+  if (req.body.quantity === 0 ) {
+    axios.delete(globalConstant.backendApi+'/cart/'+id, config)
+      .then(function (response) {
+      res.redirect(req.get('referer'));
+    });
+  } else {
+    axios.put(globalConstant.backendApi+'/cart/'+id, body, config)
+      .then(function (response) {
+      res.redirect(req.get('referer'));
+    });
+  }
+});
+
+router.get('/ourstory', function(req, res, next) {
+  res.render('story', { title: '' });
+});
+
 router.get('/contact', function(req, res, next) {
-  // business logic here
-  // for example fetch data from our backend
-  // prepare data for our html website
-  res.render('contact', { title: 'This is example form Yuchen' });
+  res.render('contact', { title: '' });
 });
 
 router.get('/users', function(req, res, next) {
   // user profile
-  res.render('signup', { title: 'This is example form Yuchen' });
+  res.render('signup', { title: '' });
 });
 
 router.get('/shop', async function(req, res, next) {
-  // user profile
+  // all products
   axios.get(globalConstant.backendApi+'/products')
   .then(function (response) {
     console.log(response.data);
@@ -86,7 +119,7 @@ router.get('/shop', async function(req, res, next) {
 
 
 router.get('/shop/:id', auth, async function(req, res, next) {
-  // user profile
+  // single product
   const id = req.params.id;
   axios.get(globalConstant.backendApi+'/products/'+id)
   .then(function (response) {
@@ -96,9 +129,7 @@ router.get('/shop/:id', auth, async function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  // login-page
-  // console.log('this is token',token)
-  res.render('login', { title: '' });
+  res.render('login', { error: false });
 });
 
 router.get('/history', auth,  function(req, res, next) {
@@ -121,8 +152,6 @@ router.get('/history/:id', auth,  function(req, res, next) {
   const id = req.params.id;
   axios.get(globalConstant.backendApi+'/orders/'+id, config)
   .then(function (response) {
-    console.log(response.data.data )
-    console.log(response.data.data.order.items)
     res.render('singleorder', { data: response.data.data });
   });
 });
@@ -130,28 +159,27 @@ router.get('/history/:id', auth,  function(req, res, next) {
 router.post('/login', async function(req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
-  //console.log('req body',req.body)
-  //test data
+
+  //test data: secure123
   const data = {
-    "email": "annikat.harmsen1000@gmail.com",
-    "password": "secure123"
+    "email": email,
+    "password": password
   }
 
   try {
       response = await axios.post(globalConstant.backendApi+'/login', data)
-      console.log('response is here' ,response.data.data)
       if (response.data.data) { 
         let token = response.data.data.token;
         let user = response.data.data.user;
         //console.log(response.data)
         signinHandler(res,  user, token)
-        res.render('/', { title: '' });
+        
       } else{
-        res.render('/', { title: 'wrong input' });
+        res.render('login', { error: true });
       }
     } catch (error) {
-      console.log(error);
-      res.render('/', { title: 'error' });
+      console.log('this is error code' ,error);
+      res.render('login', { error: true });
   }
 
 });
@@ -174,12 +202,12 @@ router.post('/users', async function(req, res, next) {
       response = await axios.post(globalConstant.backendApi+'/register', data)
       console.log('registering' ,response.data.data)
       if (response.data.data.success){
-        res.render('/login', { title: '' });
+        res.render('/', { error: false });
       }
-      res.render('/users', { title: 'wrong input' });
+      res.render('/login', { error: true });
     } catch (error) {
       console.log(error);
-      res.render('login', { title: 'error' });
+      res.render('/login', { error: true });
   }
 });
 
@@ -216,6 +244,7 @@ const signinHandler = (res,username,token) => {
     // In the response, set a cookie on the client with the name "session_cookie"
     // and the value as the UUID we generated. We also set the expiry time
     res.cookie("session_token", sessionToken, { expires: expiresAt })
+    res.redirect('/');
     res.end()
 }
 

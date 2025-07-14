@@ -41,8 +41,11 @@ const auth = (req, res, next) => {
 
 /* GET home page. */
 router.get('/', auth, function(req, res, next) {
-
-  res.render('index', { title: '' });
+  axios.get(globalConstant.backendApi+'/products')
+    .then(function (response) {
+      res.render('index', {data: response.data.data});
+    });
+  
 });
 
 router.get('/profile', auth, function(req, res, next) {
@@ -82,7 +85,7 @@ router.post('/checkout', auth, function(req, res, next) {
     "postalcode": postalcode,
     "name": name
   }
-  console.log(address);
+
   const config = {
     headers: { Authorization: `Bearer ${req.cookies['session_token']}` }
   }

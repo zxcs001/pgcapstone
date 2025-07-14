@@ -24,11 +24,17 @@
     </header>
 
     <main class="container">
-    <!-- Our Story -->
+    <!-- Products for index page -->
         <section class="our-story">
         <h2>Our Story</h2>
         <h3>Pawst &amp; Present</h3>
-        <div class="image-placeholder"></div>
+        <div class="products">
+        <% for (let i = 0; i < 5; i++) { %>
+          <div class="product-portal">
+              <div class="image-placeholder"></div>
+          </div>
+        <% } %>
+        </div>
         </section>
 
     <!-- Our Team -->

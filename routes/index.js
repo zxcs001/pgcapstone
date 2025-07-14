@@ -45,6 +45,12 @@ router.get('/', auth, function(req, res, next) {
   res.render('index', { title: '' });
 });
 
+router.get('/profile', auth, function(req, res, next) {
+  const userInfo = req.cookies['user_info']
+  console.log(userInfo)
+  res.render('profile', { user: userInfo });
+});
+
 router.get('/checkout', auth, function(req, res, next) {
   
   const config = {
@@ -215,8 +221,7 @@ router.post('/login', async function(req, res, next) {
         let token = response.data.data.token;
         let user = response.data.data.user;
         //console.log(response.data)
-        signinHandler(res,  user, token)
-        
+        signinHandler(res,  user, token)      
       } else{
         res.render('login', { error: true });
       }
@@ -276,17 +281,19 @@ const signinHandler = (res,username,token) => {
     const sessionToken = token
 
     const now = new Date()
-    const expiresAt = new Date(+now + 520 * 1000)
+    const expiresAt = new Date(+now + 600 * 1000)
 
     // create a session containing information about the user and expiry time
     const session = new Session(username,token,expiresAt)
     // add the session information to the sessions map
     sessions[sessionToken] = session
-
+    const coockieInfo = Object.assign({}, username);
+    delete coockieInfo.id;
     console.log("cookie of session",sessions)
     // In the response, set a cookie on the client with the name "session_cookie"
     // and the value as the UUID we generated. We also set the expiry time
     res.cookie("session_token", sessionToken, { expires: expiresAt })
+    res.cookie("user_info", coockieInfo, { expires: expiresAt })
     res.redirect('/');
     res.end()
 }

@@ -40,7 +40,7 @@ const auth = (req, res, next) => {
 }
 
 /* GET home page. */
-router.get('/', auth, function(req, res, next) {
+router.get('/', function(req, res, next) {
   axios.get(globalConstant.backendApi+'/products')
     .then(function (response) {
       res.render('index', {data: response.data.data});

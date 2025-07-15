@@ -102,6 +102,12 @@ header {
   color: #444;
 }
 
+.member-photo img {
+  width: 100%;
+  border-radius: 65px;
+  height: 100px;
+}
+
 /* SUBSCRIBE / FOOTER */
 .subscribe {
   text-align: center;
